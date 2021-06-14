@@ -44,9 +44,9 @@ namespace FormUpDate0
 
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
 
-                const string Src_FOLDER = @"\\fsttr02\стат. отчеты\СТАТИСТИКА\FORM\"; //@"G:\172.16.252.4\STAT\FORM501"; //
-                const string Dest_FOLDER = @"c:\ARM_STAT\FORM\";     //@"D:\FORM2"; //
-
+                const string Src_FOLDER = @"\\fsttr02\стат. отчеты\СТАТИСТИКА\FORM\";
+                const string Dest_FOLDER = @"c:\ARM_STAT\FORM\";
+                
                 var targetFiles = Directory.GetFiles(Dest_FOLDER, "*", SearchOption.AllDirectories);
                 var notExists = targetFiles.Where(p => !File.Exists(p.Replace(Dest_FOLDER, Src_FOLDER))).ToList();
                                
@@ -58,25 +58,24 @@ namespace FormUpDate0
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("emm, something went wrong?", ex.Message); //w'll deal with it later
+                        MessageBox.Show("something went wrong", ex.Message);
                     }
                 }
 
-                string[] originalFiles = Directory.GetFiles(Src_FOLDER, "*", SearchOption.AllDirectories);  // Get our files (recursive and any of them, based on the 2nd param of the Directory.GetFiles() method
+                string[] originalFiles = Directory.GetFiles(Src_FOLDER, "*", SearchOption.AllDirectories); 
 
  
                 progressBar.Maximum = originalFiles.Length;
 
-                Array.ForEach(originalFiles, (originalFileLocation) =>              // Dealing with a string array, so let's use the actionable Array.ForEach() with a anonymous method
+                Array.ForEach(originalFiles, (originalFileLocation) =>
                 {   // Get the FileInfo for both of our files
                     progressBar.Value += 1;
 
                     FileInfo originalFile = new FileInfo(originalFileLocation);
                     FileInfo destFile = new FileInfo(originalFileLocation.Replace(Src_FOLDER, Dest_FOLDER));
-                    // ^^ We can fill the FileInfo() constructor with files that don't exist...
-                    if (destFile.Exists)    // ... because we check it here
+                    
+                    if (destFile.Exists)    
                     {   // Logic for files that exist applied here; if the original is written later, replace the updated files...
-
                         if (originalFile.LastWriteTime > destFile.LastWriteTime) //intead of    originalFile.Length
                         {
                             originalFile.CopyTo(destFile.FullName, true);
@@ -102,7 +101,7 @@ namespace FormUpDate0
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!Directory.Exists(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\"))  //@"g:\192.168.15.1\СТАТ. ОТЧЕТЫ\HTML2019\IV\form\"))          
+            if (!Directory.Exists(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\")) 
             {
                 MessageBox.Show("Сетевой диск fsttr02 в данный момент не доступен, проверьте подключение, если не удалось решить проблему - свяжитесь с тех.специалистом",
                                           "Нет связи с сервером fsttr02",MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -112,9 +111,9 @@ namespace FormUpDate0
             {
                 Regex rx = new Regex(@"([0-9]{2}).([0-9]{2}).([0-9]{4})");
                 var webCl = new WebClient();
-                string html = webCl.DownloadString(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html");         //@"g:\192.168.15.1\СТАТ. ОТЧЕТЫ\HTML2019\IV\form\form.html");
+                string html = webCl.DownloadString(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html"); 
 
-                tbDate.Text = rx.Match(html).ToString();  //.Match finds what we looking for and displays it
+                tbDate.Text = rx.Match(html).ToString();
             }
         }
     }

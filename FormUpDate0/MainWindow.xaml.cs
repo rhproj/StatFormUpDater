@@ -32,7 +32,7 @@ namespace FormUpDate0
         {
             if (!Directory.Exists(@"\\fsttr02\стат. отчеты\AS4.6\ARM_STAT_2020\"))
             {
-                MessageBox.Show("Не удалось найти необходимую папку на сетевом диске fsttr02 или нет соединения с диском! :(");
+                MessageBox.Show("Не удалось найти необходимую папку на сетевом диске fsttr02");
                 return;
             }
 
@@ -40,12 +40,12 @@ namespace FormUpDate0
             if (rx.IsMatch(tbDate.Text))
             {
                 var webCl = new WebClient();
-                string html = webCl.DownloadString(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html"); //@"g:\192.168.15.1\СТАТ. ОТЧЕТЫ\HTML2019\IV\form\form.html"); //test
+                string html = webCl.DownloadString(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html");
 
 
                 string htmlUptoDate = rx.Replace(html, tbDate.Text);
 
-                using (StreamWriter sW = new StreamWriter(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html", false, Encoding.Default))   //@"g:\192.168.15.1\СТАТ. ОТЧЕТЫ\HTML2019\IV\form\form.html" 
+                using (StreamWriter sW = new StreamWriter(@"\\fsttr02\стат. отчеты\HTML2019\IV\form\form.html", false, Encoding.Default)) 
                 {
                     sW.Write(htmlUptoDate);
                 }
